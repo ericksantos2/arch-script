@@ -109,7 +109,7 @@ grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=arch_
 
 grub-mkconfig -o /boot/grub/grub.cfg
 
-sed -i -e 's/\#\ \%wheel\ ALL=(ALL:ALL)\ ALL/\%wheel\ ALL=(ALL:ALL)\ ALL/g' ./sudoers
+sed -i -e 's/\#\ \%wheel\ ALL=(ALL:ALL)\ ALL/\%wheel\ ALL=(ALL:ALL)\ ALL/g' /etc/sudoers
 
 sudo pacman -S xorg-server xorg-xinit xorg-apps mesa
 
