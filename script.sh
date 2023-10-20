@@ -66,7 +66,19 @@ if [ "${PRONTO,,}" == "y" ]; then
     nano /etc/pacman.d/mirrorlist
   fi
 
-  pacstrap /mnt base base-devel linux linux-firmware nano dhcpcd
+  clear
+  echo "Qual kernel linux você deseja usar?"
+  echo "padrão / lts / zen"
+  read KERNEL_DESEJADO
+
+  KERNEL_ALVO="linux"
+  if [ "${KERNEL_DESEJADO,,}" == "lts" ]; then
+    KERNEL_ALVO="linux-lts"
+  elif [ "${KERNEL_DESEJADO,,}" == "zen" ]; then
+    KERNEL_ALVO="linux-zen"
+  fi
+
+  pacstrap /mnt base base-devel $KERNEL_ALVO linux-firmware nano dhcpcd
   genfstab -U -p /mnt >>/mnt/etc/fstab
 
   clear
@@ -82,7 +94,7 @@ read
 ln -sf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
 hwclock --systohc
 
-sed -i -e 's/#pt_BR/pt_BR/g' ./locale.gen
+sed -i -e 's/#pt_BR/pt_BR/g' /etc/locale.gen
 locale-gen
 
 echo KEYMAP=br-abnt2 >> /etc/vconsole.conf
